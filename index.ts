@@ -10,5 +10,5 @@ const ec2Instance = new aws.ec2.Instance("windows-machine", {
   instanceType: "t3.large"
 });
 
-// output machine address
-export const instanceArn = ec2Instance.arn;
+// output machine ip address
+export const ipAddress = ec2Instance.publicIp;
