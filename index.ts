@@ -10,8 +10,9 @@ const keyPairName = "windows-machine-key-pair";
 const tlsKey = new tls.PrivateKey("tls-key", {
   algorithm: "RSA"
 });
+const publicKey = tlsKey.publicKeyOpenssh;
 const keyPair = new aws.ec2.KeyPair(keyPairName, {
-  publicKey: tlsKey.publicKeyOpenssh,
+  publicKey: publicKey,
   keyName: keyPairName
 });
 
@@ -24,6 +25,5 @@ const ec2Instance = new aws.ec2.Instance("windows-machine", {
 
 // Output machine IP address
 export const ipAddress = ec2Instance.publicIp;
-// Output key pair
-export const privateKey = tlsKey.privateKeyPem;
-export const publicKey = tlsKey.privateKeyPem;
+// Output private key
+export const privateKey = pulumi.unsecret(tlsKey.privateKeyPem);
